@@ -1,0 +1,842 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>桃花島月光藍海 | 獨享海景住宿推薦，日出夕陽最佳民宿</title>
+  <meta name="description" content="桃花島月光藍海提供千萬級海景房，讓您迎日出、賞雲海、觀星空。立即預訂享受寧靜、浪漫的海岸假期。">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap');
+    :root{
+        --accent:#1e90ff;
+        --dark:#0b2545;
+        --muted:#667;
+        --radius:14px;
+        --bg:#f7fafc;
+        --marquee-speed: 25s; /* V5.03.005U NEW: 跑馬燈速度變數 */
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Noto Sans TC',sans-serif;margin:0;color:#222;background:var(--bg)}
+    
+    /* V5.02.003 NEW: Fixed Navigation Bar Styles */
+    .nav{
+      position: fixed; /* 讓導覽列固定在頂部 */
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 16px; 
+      background: transparent; /* 初始背景透明 */
+      transition: background 0.3s ease-out, padding 0.3s ease-out; /* 平滑過渡效果 */
+      z-index: 1000; /* 確保它在最上層 */
+    }
+    /* NEW: 導覽列內部內容置中 */
+    .nav .wrap-content {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      max-width:1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    /* NEW: 捲動後的導覽列樣式 - 內邊距維持 5px */
+    .nav.nav-scrolled {
+      background: rgba(11,37,69, 0.95); /* 捲動後變為實色深藍 */
+      padding-top: 5px;  /* 維持 5px */
+      padding-bottom: 5px; /* 維持 5px */
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    /* V5.02.003 NEW: 捲動後連結文字縮小 */
+    .nav.nav-scrolled nav a {
+        font-size: 13px; /* 縮小文字 */
+        padding: 3px 8px; /* 縮小連結項目的內邊距 */
+    }
+    /* V5.03.005 UPDATE: 移除捲動後 SVG 相關樣式，改為圖片 */
+    .nav.nav-scrolled .brand svg { 
+        display: none; /* 隱藏舊的 SVG，確保不會干擾 */
+    }
+    /* V5.03.005 UPDATE: 捲動後品牌 Logo/文字調整 - 顏色修正 */
+    .nav.nav-scrolled .brand h1 {
+        font-size: 10px; /* 微幅縮小 H1 文字 */
+        color: white; /* 修正：確保文字顏色為白色 */
+        opacity: 1; /* 確保完全不透明 */
+    }
+
+    header{
+      /* 調整 padding-top 以補償固定導覽列所佔空間 */
+      /* V5.03.005U UPDATE: 跑馬燈移位後，header只需考慮導覽列高度 */
+      padding-top: 80px; 
+      background:linear-gradient(180deg, rgba(11,37,69,0.9), rgba(11,37,69,0.5));
+      color:#fff;
+      padding-left: 16px; 
+      padding-right: 16px;
+      padding-bottom: 40px; 
+      overflow:hidden;
+      position:relative;
+      perspective:1600px;
+      perspective-origin: center center;
+      height: auto;
+    }
+    header::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background-size:cover;
+      background-position:center;
+      z-index:-1;
+    }
+    /* 預設使用全景圖（適用於電腦和橫向平板） */
+    header[data-bg="0"]::before { background-image:url('sunrise.jpg'); }
+    header[data-bg="1"]::before { background-image:url('sea-of-clouds.jpg'); }
+    header[data-bg="2"]::before { background-image:url('sunset.jpg'); }
+    header[data-bg="3"]::before { background-image:url('starry-sky.jpg'); }
+    .bg-animated::before {
+      animation: pan-3d 60s linear infinite;
+    }
+    
+    .brand{display:flex;align-items:center;gap:12px}
+    /* 初始狀態下 H1 樣式 - 確保為白色 */
+    .brand h1{font-size:11px;margin:0;font-weight:700; color: white; opacity: 1;}
+    /* V5.03.005 NEW: Logo 圖片樣式 */
+    .brand-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%; /* 確保圖片顯示為圓形 */
+        object-fit: cover; /* 確保圖片填滿圓形區域 */
+        transition: width 0.3s ease-out, height 0.3s ease-out; /* 平滑縮放 */
+    }
+    /* V5.03.005 NEW: 捲動後 Logo 圖片縮小 */
+    .nav.nav-scrolled .brand-logo {
+        width: 30px;
+        height: 30px;
+    }
+
+    nav ul{list-style:none;display:flex;gap:16px;margin:0;padding:0}
+    nav a{color:#fff;text-decoration:none;padding:8px 14px;border-radius:10px;font-weight:500}
+    nav a:hover{background:rgba(255,255,255,0.1)}
+    .hero{
+      max-width:1200px;
+      margin:32px auto 0;
+      padding:24px;
+      background:rgba(0,0,0,0.25);
+      border-radius:12px;
+      position:relative;
+      z-index:10;
+    }
+    .hero .tag{background:rgba(255,255,255,0.18);display:inline-block;padding:6px 12px;border-radius:20px;font-size:14px}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:28px;max-width:1200px;margin:32px auto;padding:0 16px}
+    .card{background:#fff;border-radius:var(--radius);padding:18px;box-shadow:0 6px 20px rgba(10,20,30,0.07)}
+    .card h3{margin-top:0;font-weight:600;color:var(--dark)}
+    .news-list li{margin-bottom:14px}
+    .news-list time{display:block;color:var(--muted);font-size:13px}
+    .rooms{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+    .room{overflow:hidden;border-radius:12px;background:#fff;display:flex;flex-direction:column}
+    .room-gallery{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;height:180px;overflow:hidden}
+    .room-gallery img{width:100%;height:100%;object-fit:cover;display:block}
+    .room .info{padding:14px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+    .room h4{margin:0 0 8px;font-size:18px;font-weight:600;color:var(--dark)}
+    .sidebar .book-btn{display:block;background:var(--accent);color:#fff;text-align:center;padding:14px;border-radius:12px;text-decoration:none;font-weight:600}
+    .sidebar h3,.sidebar h4{margin-top:0;color:var(--dark)}
+    .map{width:100%;height:220px;border-radius:10px;overflow:hidden}
+    footer{background:#07122a;color:#cbdcec;padding:32px 16px;margin-top:36px}
+    footer .wrap{max-width:1200px;margin:0 auto;display:flex;gap:20px;flex-wrap:wrap}
+    .footer-col{flex:1;min-width:220px}
+    footer h4{margin-top:0;font-weight:600;color:#fff}
+    .booking-form{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .booking-form label{font-size:14px;font-weight:600;color:var(--dark)}
+    .booking-form input,.booking-form select,.booking-form textarea{padding:8px;border:1px solid #ccc;border-radius:8px;font-family:inherit} /* 新增 textarea 樣式 */
+    .booking-form button{background:var(--accent);color:#fff;padding:10px;border:none;border-radius:8px;font-weight:600;cursor:pointer}
+    .booking-form button:hover{background:#176fcd}
+
+    /* V5.03.002 NEW: 加購服務樣式 */
+    .addon-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    .addon-item input[type="checkbox"] {
+        margin-right: 10px;
+        width: 18px;
+        height: 18px;
+    }
+    .addon-item label {
+        font-weight: 400; /* 讓加購服務的標籤字體輕一點 */
+        color: #444;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    /* V5.03.002 NEW: 總計金額樣式 */
+    .total-display {
+        background: #e6f0ff; /* 淺藍色背景，突出顯示 */
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        color: var(--dark);
+        border: 1px solid var(--accent);
+    }
+    .total-amount {
+        font-size: 20px;
+        color: var(--accent);
+    }
+
+    /* V5.03.005U NEW: Marquee Section Styles (跑馬燈樣式) */
+    .marquee-section {
+        background: #e6f0ff; /* 淡藍色背景 */
+        color: var(--dark);
+        padding: 6px 12px; /* 調整高度，使其更小 */
+        overflow: hidden; /* 隱藏溢出的文字 */
+        white-space: nowrap; /* 確保內容顯示在同一行 */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        font-size: 14px;
+        border-radius: var(--radius); /* 配合卡片圓角 */
+        margin-bottom: 18px; /* 與下方卡片保持距離 */
+    }
+    .marquee-content {
+        display: inline-block; /* 讓內容可以被動畫 */
+        padding-left: 100%; /* 從螢幕右側開始 */
+        animation: marquee-scroll var(--marquee-speed) linear infinite; /* 使用CSS變數控制速度 */
+        animation-delay: 1s; /* 稍微延遲後開始第一次滾動 */
+    }
+    .marquee-content span {
+        margin-right: 40px; /* 訊息間距 */
+        display: inline-block; /* 確保每個訊息獨立佔用空間 */
+    }
+    /* V5.03.005U NEW: 跑馬燈動畫 */
+    @keyframes marquee-scroll {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-150%); } /* 滾動到左側，確保所有內容都通過 */
+    }
+    /* V5.03.005U NEW: 滑鼠懸停時暫停動畫 (良好使用者體驗) */
+    .marquee-content:hover {
+        animation-play-state: paused;
+    }
+
+    /* --- 頁首背景3D環繞動畫 --- */
+    @keyframes pan-3d {
+      0% {
+        transform: translateZ(0) rotateY(0deg);
+      }
+      75% {
+        transform: translateZ(0) rotateY(-360deg);
+      }
+      100% {
+        transform: translateZ(0) rotateY(-360deg);
+      }
+    }
+    .timer {
+      position: absolute;
+      top: 20px; 
+      right: 16px;
+      background: transparent;
+      color: white;
+      padding: 0;
+      border-radius: 0;
+      font-size: 14px;
+      z-index: 100;
+      font-weight: bold;
+      text-align: right;
+    }
+    .image-nav {
+      position: absolute;
+      bottom: 5px;
+      right: 16px;
+      z-index: 100;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding-bottom: 5px;
+    }
+    .image-nav button {
+      background: rgba(255,255,255,0.3);
+      border: none;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      color: white;
+      font-size: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .image-nav button:hover, .image-nav button.active {
+      background: rgba(255,255,255,0.7);
+    }
+    /* --- 燈箱效果 --- */
+    .room-gallery a{cursor:zoom-in;display:block}
+    .lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity 0.2s,visibility 0s 0.2s}
+    .lightbox.open{visibility:visible;opacity:1;transition:opacity 0.2s,visibility 0s}
+    .lightbox img{max-width:90%;max-height:90%;margin:auto;box-shadow:0 0 10px rgba(0,0,0,0.5)}
+    .lightbox .close{position:absolute;top:20px;right:30px;font-size:40px;color:#fff;text-decoration:none;z-index:10000;cursor:zoom-out;line-height:1}
+
+    /* --- 修正：區塊標題被固定導覽列遮蔽問題 (Scroll Offset Fix) --- */
+    /* 確保所有目標區塊在捲動到時，不會被固定導覽列遮擋 */
+    #intro, #news, #rooms, #reviews, #deals, #transport, #booking { 
+        /* 增加一個安全邊距，讓內容標題完全顯示 */
+        scroll-margin-top: 95px; 
+    }
+
+    /* --- 漢堡選單樣式 (隱藏) --- */
+    .menu-toggle {
+        display: none;
+    }
+    
+    /* === 手機版響應式優化（768px 以下）=== */
+    @media (max-width: 768px) {
+      /* 調整 padding-top 以補償固定導覽列所佔空間 */
+      header {
+        /* V5.03.005U UPDATE: 跑馬燈移位後，header只需考慮導覽列高度 */
+        padding-top: 80px; 
+        padding-bottom: 15px; 
+      }
+      /* 導覽列高度調整 */
+      .nav {
+        padding: 10px; 
+      }
+      .nav.nav-scrolled {
+        padding-top: 8px; 
+        padding-bottom: 8px;
+      }
+      .nav.nav-scrolled nav a { 
+        font-size: 14px; 
+        padding: 5px 8px;
+      }
+
+      /* V5.03.005U NEW: 跑馬燈在手機上的樣式調整 */
+      .marquee-section {
+          font-size: 12px;
+          padding: 5px 10px; /* 進一步縮小手機版高度 */
+          margin-bottom: 15px; /* 與下方卡片保持距離 */
+      }
+      .marquee-content {
+          animation-duration: var(--marquee-speed); /* 保持使用變數 */
+      }
+      .marquee-content span {
+          margin-right: 25px;
+      }
+
+      /* 使用直向圖片 */
+      header[data-bg="0"]::before { background-image:url('sunrise-mobile.jpg'); }
+      header[data-bg="1"]::before { background-image:url('sea-clouds-mobile.jpg'); }
+      header[data-bg="2"]::before { background-image:url('sunset-mobile.jpg'); }
+      header[data-bg="3"]::before { background-image:url('starry-sky-mobile.jpg'); }
+      
+      /* 調整網格佈局 */
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      /* 修正：手機版導覽列與內容距離 */
+      .nav .wrap-content {
+        flex-direction: column;
+        align-items: flex-start; 
+        gap: 0; 
+        width: 100%;
+        padding-bottom: 20px; 
+      }
+      .brand {
+        width: 100%; 
+        justify-content: flex-start; 
+        padding-left: 10px; 
+        padding-bottom: 5px; 
+      }
+      .brand h1 {
+        font-size: 14px; 
+        color: white; 
+        opacity: 1; 
+      }
+      nav {
+        width: 100%;
+      }
+      nav ul {
+        flex-direction: row;
+        gap: 4px; 
+        justify-content: space-around; 
+        flex-wrap: wrap; 
+        padding: 0 5px; 
+      }
+      nav a {
+        font-size: 13px; 
+        padding: 5px 6px; 
+        border-radius: 6px;
+      }
+      
+      /* 調整頁首主標題區域 */
+      .hero {
+        margin-top: 10px; 
+        padding: 12px; 
+      }
+      .hero h2 {
+        font-size: 18px; 
+        margin-top: 6px;
+        margin-bottom: 2px;
+      }
+      .hero p {
+        font-size: 13px; 
+      }
+      .hero .tag {
+        padding: 4px 10px;
+        font-size: 12px;
+      }
+
+      /* 調整計時器與按鈕位置 */
+      .timer {
+        top: 15px; 
+        right: 16px;
+      }
+      .image-nav {
+        bottom: 5px;
+        right: 16px;
+      }
+
+      /* 修正：手機版區塊標題被固定導覽列遮蔽問題 */
+      #intro, #news, #rooms, #reviews, #deals, #transport, #booking { 
+        scroll-margin-top: 130px; 
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="nav">
+    <div class="wrap-content">
+      <div class="brand">
+        <img src="logo1024.png" alt="月光藍海民宿Logo" class="brand-logo">
+        <h1>月光藍海 (網站設計中.. V5.03.005U)</h1> <!-- 更新版本號 -->
+      </div>
+      <div class="menu-toggle">☰</div>
+      <nav>
+        <ul>
+          <li><a href="#intro">旅宿介紹</a></li>
+          <li><a href="#rooms">房型資訊</a></li>
+          <li><a href="#reviews">口碑好評</a></li>
+          <li><a href="#deals">優惠方案</a></li>
+          <li><a href="#transport">交通指引</a></li>
+          <li><a href="#booking">線上訂房</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <header class="bg-animated" data-bg="0">
+    <div class="timer">00:00</div>
+    <div class="image-nav">
+      <button data-index="0" class="active">1</button>
+      <button data-index="1">2</button>
+      <button data-index="2">3</button>
+      <button data-index="3">4</button>
+    </div>
+    <div class="hero">
+      <span class="tag">海岸民宿</span>
+      <
+	  <h2 style="margin:8px 0 4px;font-weight:700">桃花島海景住宿推薦：在月光與藍海間，遇見永恆的詩意</h2>
+      <p style="margin:0;color:rgba(255,255,255,0.9)">我們以四境(日出、夕陽、雲海、星空)書寫不朽之美。千萬等級打造溫馨山海景觀居所(桃花島月光藍海)，讓每位旅人~不負此行滿載而歸。</p>
+    </div>
+  </header>
+  <main>
+    <section class="grid" aria-label="主要內容">
+      <div>
+        <article class="card" id="intro">
+          <h3>月光藍海：桃花島海景民宿介紹</h3>
+          <p>「月光藍海」坐落於桃花島海岸線最佳觀景點，每一刻都是自然與心靈的對話。陽光灑落在深藍海面，波光粼粼，寧靜而浪漫。這裡遠離喧囂，迎日出而醒，隨夕陽而眠，雲海之上，仰望星空。我們以千萬等級裝潢，提供進口寢具、獨立衛浴與貼心服務。「月光藍海」誠摯邀約您享受桃花島海景的寧靜及尊榮住宿體驗，尋得屬於自己的永恆片刻。</p>
+        </article>
+        
+        <article class="card" id="news" style="margin-top:18px">
+          <h3>月光藍海民宿最新消息與旅遊資訊</h3>
+          <ul class="news-list">
+            <li>
+              <strong>年度奇景 — 桃花島月光海觀賞預告</strong>
+              <time>2025-09-14</time>
+              <p style="margin:6px 0 0">晴朗少雲的夜晚，您將有機會欣賞到「月光海」。不定期公布最佳觀賞日期與專屬攝影行程建議。</p>
+            </li>
+            <li>
+              <strong>環保倡議：自備盥洗用品享優惠</strong>
+              <time>2025-09-14</time>
+              <p style="margin:6px 0 0">響應地球永續，我們提供補充式沐浴乳與洗髮乳，自備牙刷與牙膏者可獲得咖啡折價券。</p>
+            </li>
+          </ul>
+        </article>
+        
+        <article class="card" id="rooms" style="margin-top:18px">
+          <h3>房型資訊</h3>
+          <div class="rooms">
+            <div class="room">
+              <div class="room-gallery">
+                <a href="#" class="img-link" data-img-src="dreamy-seaview-a1.jpg" data-alt="夢幻海景房：雙人床與 180 度海景窗"><img src="dreamy-seaview-a1.jpg" alt="夢幻海景房：雙人床與 180 度海景窗"></a>
+                <a href="#" class="img-link" data-img-src="dreamy-seaview-a2.jpg" data-alt="夢幻海景房：房間內看見的海岸夜景"><img src="dreamy-seaview-a2.jpg" alt="夢幻海景房：房間內看見的海岸夜景"></a>
+              </div>
+              <div class="info">
+                <h4>夢幻海景房（熱門情侶套房）</h4>
+                <p>180度廣闊海景，適合情侶或好友入住。房內配有頂級寢具與專屬海景窗，享受寧靜浪漫的桃花島海邊假期。</p>
+                <p style="margin-top:6px;color:var(--muted)">價格：NT$3,600 起（含在地特色早餐）</p>
+              </div>
+            </div>
+            <div class="room">
+              <div class="room-gallery">
+                <a href="#" class="img-link" data-img-src="mountain-ocean-view-b1.jpg" data-alt="山海景觀房：兩張單人床與山海景觀陽台"><img src="mountain-ocean-view-b1.jpg" alt="山海景觀房：兩張單人床與山海景觀陽台"></a>
+                <a href="#" class="img-link" data-img-src="mountain-ocean-view-b2.jpg" data-alt="山海景觀房：從陽台眺望的夕陽美景"><img src="mountain-ocean-view-b2.jpg" alt="山海景觀房：從陽台眺望的夕陽美景"></a>
+              </div>
+              <div class="info">
+                <h4>山海景觀房</h4>
+                <p>適合家人或好友入住。房內備有舒適單人床兩張，可彈性加床。讓您同時享受桃花島的綠意山景與蔚藍海景。</p>
+                <p style="margin-top:6px;color:var(--muted)">價格：NT$4,800 起（含早餐）</p>
+              </div>
+            </div>
+            <div class="room">
+              <div class="room-gallery">
+                <a href="#" class="img-link" data-img-src="sky-balcony-c1.jpg" data-alt="天空陽台家庭房：寬敞四人房與獨立陽台"><img src="sky-balcony-c1.jpg" alt="天空陽台家庭房：寬敞四人房與獨立陽台"></a>
+                <a href="#" class="img-link" data-img-src="sky-balcony-c2.jpg" data-alt="天空陽台家庭房：陽台外的夕照與庭院"><img src="sky-balcony-c2.jpg" alt="天空陽台家庭房：陽台外的夕照與庭院"></a>
+              </div>
+              <div class="info">
+                <h4>天空陽台家庭房</h4>
+                <p>專為家庭或朋友團體設計。專屬陽台與浴缸，擁綠意庭院景觀，房內備有舒適雙人床兩張。最適合慶祝紀念日與浪漫桃花島假期。</p>
+                <p style="margin-top:6px;color:var(--muted)">價格：NT$6,600 起（含早餐）</p>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="card" id="reviews" style="margin-top:18px">
+          <h3>口碑好評</h3>
+          <blockquote style="margin:0;padding:14px;border-left:4px solid #eee;background:#fafafa;border-radius:8px">「月光海真是美，千萬價格等級打造全新民宿，高檔又乾淨舒適，早餐色香味俱佳！」 — 朱先生</blockquote>
+          <blockquote style="margin:0;padding:14px;border-left:4px solid #eee;background:#fafafa;border-radius:8px">「老闆娘很熱心幫忙規劃行程，絕對值得再訪！」 — 劉小姐</blockquote>
+        </article>
+        <article class="card" id="deals" style="margin-top:18px">
+          <h3>優惠方案</h3>
+          <ul>
+            <li>平日連住兩晚以上，享 9 折優惠。</li>
+            <li>三人同行入住海景房，第 3 人享 5 折優惠。</li>
+            <li>生日當月入住，加贈精緻甜點與飲品。</li>
+          </ul>
+        </article>
+        
+        <article class="card" id="transport" style="margin-top:18px">
+          <h3>桃花島月光藍海交通指引與地圖</h3>
+          <p>月光藍海位於桃花島，距離主要車站約 10 分鐘車程。可預約接駁服務或自行開車前往，民宿提供免費停車位，步行 5 分鐘即可到達絕美海岸線。</p>
+          <div class="map" style="margin-top:10px">
+            <iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed?pb=!1m18!2m..." allowfullscreen></iframe>
+          </div>
+        </article>
+      </div>
+      <aside class="sidebar">
+        <!-- V5.03.005U NEW: Marquee Section (跑馬燈區塊) 移到線上訂房需求單上方 -->
+        <section class="marquee-section">
+          <div class="marquee-content">
+            <span>🔔 最新公告：感謝您的到來，桃花島月光藍海歡迎您！請注意防曬，享受海風。</span>
+            <span>✨ 限時優惠：預訂三晚享八折！速洽客服。</span>
+            <span>🏖️ 旅遊建議：附近步道已開放，適合早晨健行。</span>
+            <span>☀️ 好消息：連續入住三天兩夜享免費早餐升級。</span>
+          </div>
+        </section>
+
+        <div class="card" id="booking">
+          <h3>線上訂房需求單</h3>
+          
+          <form class="booking-form" id="bookingForm" action="https://formspree.io/f/mblabdyr" method="POST">
+            <label for="name">您的姓名</label>
+            <input type="text" id="name" name="姓名" required placeholder="請輸入姓名">
+            <label for="phone">您的手機</label>
+            <input type="tel" id="phone" name="手機" required placeholder="請輸入手機號碼">
+            <label for="email-input">您的 Email</label>
+            <input type="email" id="email-input" name="Email" required placeholder="example@gmail.com">
+            <input type="hidden" name="_replyto" value="email">
+            
+            <label for="checkin">入住日期</label>
+            <input type="date" id="checkin" name="入住日期" required>
+            <label for="checkout">退房日期</label>
+            <input type="date" id="checkout" name="退房日期" required>
+            
+            <p style="margin:5px 0 10px; font-size:13px; color:var(--dark); font-weight:600; padding:8px; background:#f0f6ff; border-radius:6px;">
+                價格參考：夢幻海景房 NT$3,600起 / 山海景觀房 NT$4,800起 / 天空陽台家庭房 NT$6,600起
+                <span style="display:block; font-size:12px; font-weight:400; color:var(--muted); margin-top:4px;">(實際價格以電話/Email確認為準，假日或特殊節日價格可能不同)</span>
+            </p>
+
+            <label for="room">選擇房型</label>
+            <select id="room" name="選擇房型" required>
+              <option value="夢幻海景房" data-price-key="Dreamy">夢幻海景房</option>
+              <option value="山海景觀房" data-price-key="Mountain">山海景觀房</option>
+              <option value="天空陽台家庭房" data-price-key="Sky">天空陽台家庭房</option>
+            </select>
+            <label for="guests">入住人數</label>
+            <input type="number" id="guests" name="入住人數" min="1" max="6" value="2" required>
+            
+            <label style="margin-top:10px;">加購服務 (選填)</label>
+            <div class="addon-item">
+                <input type="checkbox" id="addon-shuttle" name="加購：來回接送" value="是">
+                <label for="addon-shuttle">高鐵/車站來回接送服務 (+NT$600)</label>
+            </div>
+            
+            <label for="notes" style="margin-top:10px;">特殊需求/備註</label>
+            <textarea id="notes" name="特殊需求備註" rows="3" placeholder="例如：素食早餐、嬰兒床需求、預計抵達時間..."></textarea>
+            
+            <div class="total-display">
+                <span>預估房費總計 (平日價)</span>
+                <span class="total-amount" id="booking-total">NT$ 0</span>
+            </div>
+            <p style="font-size:12px; color:var(--muted); margin: -5px 0 10px;">
+                <span style="color:var(--accent); font-weight:600;">* 價格為平日預估，僅供參考，不含假日加成。</span>
+            </p>
+
+            <button type="submit">送出訂房需求單</button>
+          </form>
+          
+          <p style="margin-top:10px;font-size:13px;color:var(--muted); line-height:1.5;">
+            ※ 本表單僅為**需求送出**，非正式訂單確認。<br>
+            我們會儘速以 Email 或電話與您**確認房源、價格及付訂事宜**。
+          </p>
+        </div>
+        <div class="card" style="margin-top:18px">
+          <h4>聯絡資訊</h4>
+          <p style="margin:6px 0">電話：09xx-xxx-xxx<br>Email：test@moonblue.com</p>
+          <h4 style="margin-top:12px">常見問題</h4>
+          <ul style="padding-left:18px;color:var(--muted)">
+            <li>入住時間：15:00 後</li>
+            <li>退房時間：11:00 前</li>
+            <li>不可攜帶寵物！</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:18px">
+          <h4>社群連結</h4>
+          <p>Line（請放上您的實際連結）</p>
+          <p>Facebook（請放上您的實際連結）</p>
+          <p>Instagram（請放上您的實際連結）</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      <div class="footer-col">
+        <h4>月光藍海民宿（桃花島）</h4>
+        <p>地址：桃花島山高水長路途遙遠612號（範例）<br>電話：01-xxxxxxx / 手機：09xx-xxx-xxx</p>
+      </div>
+      <div class="footer-col">
+        <h4>快速連結</h4>
+        <ul style="padding-left:18px;color:#c8d7f5">
+          <li><a href="#rooms" style="color:inherit">查看所有海景房型資訊</a></li>
+          <li><a href="#deals" style="color:inherit">當季優惠方案</a></li>
+          <li><a href="#booking" style="color:inherit">線上預訂桃花島住宿</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>營業資訊</h4>
+        <p>Check-in: 15:00｜Check-out: 11:00<br>Email: test@moonblue.com</p>
+      </div>
+    </div>
+  </footer>
+  <div id="lightbox" class="lightbox">
+    <span class="close">×</span>
+    <img src="" alt="">
+  </div>
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t) t.scrollIntoView({behavior:'smooth',block:'start'});});});
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const imgLinks = document.querySelectorAll('.img-link');
+    imgLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const imgSrc = link.dataset.imgSrc;
+        const imgAlt = link.dataset.alt;
+        lightboxImg.src = imgSrc;
+        lightboxImg.alt = imgAlt;
+        lightbox.classList.add('open');
+      });
+    });
+    lightbox.addEventListener('click', (e) => {
+      if (e.target.matches('.close') || e.target.matches('.lightbox')) {
+        lightbox.classList.remove('open');
+      }
+    });
+
+    const header = document.querySelector('header');
+    const timerDisplay = document.querySelector('.timer');
+    const imageNavButtons = document.querySelectorAll('.image-nav button');
+    const images = ['sunrise.jpg', 'sea-of-clouds.jpg', 'sunset.jpg', 'starry-sky.jpg'];
+    const totalTimePerImage = 60;
+
+    let currentImageIndex = 0;
+    let timerInterval;
+    let timeLeft = totalTimePerImage;
+
+    function formatTime(seconds) {
+      const min = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const sec = (seconds % 60).toString().padStart(2, '0');
+      return `${min}:${sec}`;
+    }
+
+    function switchImage(index) {
+      currentImageIndex = index;
+      header.setAttribute('data-bg', currentImageIndex);
+      imageNavButtons.forEach(button => {
+        button.classList.remove('active');
+      });
+      imageNavButtons[currentImageIndex].classList.add('active');
+    }
+
+    function updateTimer() {
+      timeLeft--;
+      if (timeLeft <= 0) {
+        timeLeft = totalTimePerImage;
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        switchImage(currentImageIndex);
+      }
+      timerDisplay.textContent = formatTime(timeLeft);
+    }
+
+    // 初始化設定並啟動計時器
+    switchImage(0);
+    timerInterval = setInterval(updateTimer, 1000);
+
+    // 手動切換
+    imageNavButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const newIndex = parseInt(button.dataset.index);
+        switchImage(newIndex);
+      });
+    });
+
+    // V5.02.003 NEW: 背景透明度變化特效
+    const nav = document.querySelector('.nav');
+    const SCROLL_THRESHOLD = 50; // 捲動超過 50 像素後變色
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > SCROLL_THRESHOLD) {
+            // 捲動超過閾值，加上變色 class
+            nav.classList.add('nav-scrolled');
+        } else {
+            // 捲動回頂部，移除變色 class
+            nav.classList.remove('nav-scrolled');
+        }
+    });
+    
+    // =========================================================================
+    // V5.04.001 / V5.03.004 / V5.03.005 表單邏輯與驗證
+    // =========================================================================
+
+    // 1. 價格定義 (平日基本價)
+    const prices = {
+        Dreamy: 3600, // 夢幻海景房
+        Mountain: 4800, // 山海景觀房
+        Sky: 6600, // 天空陽台家庭房
+        Shuttle: 600 // 高鐵/車站來回接送服務
+    };
+
+    // 2. 獲取所有相關 DOM 元素
+    const bookingForm = document.getElementById('bookingForm');
+    const checkinDateInput = document.getElementById('checkin');
+    const checkoutDateInput = document.getElementById('checkout');
+    const roomSelect = document.getElementById('room');
+    const addonShuttle = document.getElementById('addon-shuttle');
+    const bookingTotalDisplay = document.getElementById('booking-total');
+
+    // Helper 函數：計算入住晚數 (一晚 = 1 天)
+    function calculateNights(checkin, checkout) {
+        const checkinDate = new Date(checkin);
+        const checkoutDate = new Date(checkout);
+
+        if (isNaN(checkinDate) || isNaN(checkoutDate)) {
+            return 0;
+        }
+
+        const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
+        const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        
+        return nights > 0 ? nights : 0;
+    }
+
+    // A. 即時總金額計算函數
+    function updateBookingTotal() {
+        const checkin = checkinDateInput.value;
+        const checkout = checkoutDateInput.value;
+        const isShuttleSelected = addonShuttle.checked;
+        
+        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+        const selectedRoomKey = selectedOption.getAttribute('data-price-key');
+
+        const nights = calculateNights(checkin, checkout);
+        let subtotal = 0;
+
+        if (nights > 0 && prices[selectedRoomKey]) {
+            subtotal = prices[selectedRoomKey] * nights;
+        }
+
+        let addonFee = isShuttleSelected ? prices.Shuttle : 0;
+        const total = subtotal + addonFee;
+
+        const formattedTotal = total.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 });
+        
+        if (total > 0) {
+            bookingTotalDisplay.textContent = formattedTotal;
+        } else {
+            bookingTotalDisplay.textContent = 'NT$ 0';
+        }
+    }
+
+    // B. 表單前端驗證函數 (沿用 V5.04.001 邏輯)
+    function validateForm(event) {
+        const checkin = checkinDateInput.value;
+        const checkout = checkoutDateInput.value;
+
+        // 如果日期欄位沒有填寫，讓瀏覽器原生 required 提示處理 (HTML required 屬性)
+        if (!checkin || !checkout) {
+            return true; 
+        }
+
+        const checkinDate = new Date(checkin);
+        const checkoutDate = new Date(checkout);
+        const today = new Date();
+        // 為了只比較日期，將今天的時間部分歸零
+        today.setHours(0, 0, 0, 0); 
+        
+        // 1. 檢查入住日期是否是過去的日期
+        if (checkinDate.getTime() < today.getTime()) {
+            alert('❌ 入住日期不能選擇今天或過去的日期，請重新選擇。');
+            event.preventDefault(); // 阻止表單提交
+            return false;
+        }
+
+        // 2. 檢查退房日期是否晚於入住日期
+        if (checkoutDate.getTime() <= checkinDate.getTime()) {
+            alert('❌ 退房日期必須晚於入住日期，請確認您的住宿天數。');
+            event.preventDefault(); // 阻止表單提交
+            return false;
+        }
+
+        // 3. 檢查是否至少住一晚
+        const nights = calculateNights(checkin, checkout);
+        if (nights < 1) {
+            alert('❌ 系統偵測到入住晚數不足一晚，請確認日期選擇是否正確。');
+            event.preventDefault(); // 阻止表單提交
+            return false;
+        }
+
+        // 所有驗證通過，允許提交
+        return true;
+    }
+
+
+    // 3. 綁定事件監聽器
+    checkinDateInput.addEventListener('change', updateBookingTotal);
+    checkoutDateInput.addEventListener('change', updateBookingTotal);
+    roomSelect.addEventListener('change', updateBookingTotal);
+    addonShuttle.addEventListener('change', updateBookingTotal);
+    
+    // 綁定表單提交事件
+    bookingForm.addEventListener('submit', validateForm);
+    
+    // 初始化時計算一次
+    document.addEventListener('DOMContentLoaded', updateBookingTotal);
+
+  </script>
+</body>
+</html>
