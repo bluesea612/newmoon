@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
@@ -8,14 +8,7 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap');
-    :root{
-        --accent:#1e90ff;
-        --dark:#0b2545;
-        --muted:#667;
-        --radius:14px;
-        --bg:#f7fafc;
-        --marquee-speed: 25s; /* V5.03.005U NEW: 跑馬燈速度變數 */
-    }
+    :root{--accent:#1e90ff;--dark:#0b2545;--muted:#667;--radius:14px;--bg:#f7fafc}
     *{box-sizing:border-box}
     body{font-family:'Noto Sans TC',sans-serif;margin:0;color:#222;background:var(--bg)}
     
@@ -64,8 +57,7 @@
 
     header{
       /* 調整 padding-top 以補償固定導覽列所佔空間 */
-      /* V5.03.005U UPDATE: 跑馬燈移位後，header只需考慮導覽列高度 */
-      padding-top: 80px; 
+      padding-top: 100px; 
       background:linear-gradient(180deg, rgba(11,37,69,0.9), rgba(11,37,69,0.5));
       color:#fff;
       padding-left: 16px; 
@@ -188,38 +180,6 @@
         color: var(--accent);
     }
 
-    /* V5.03.005U NEW: Marquee Section Styles (跑馬燈樣式) */
-    .marquee-section {
-        background: #e6f0ff; /* 淡藍色背景 */
-        color: var(--dark);
-        padding: 6px 12px; /* 調整高度，使其更小 */
-        overflow: hidden; /* 隱藏溢出的文字 */
-        white-space: nowrap; /* 確保內容顯示在同一行 */
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        font-size: 14px;
-        border-radius: var(--radius); /* 配合卡片圓角 */
-        margin-bottom: 18px; /* 與下方卡片保持距離 */
-    }
-    .marquee-content {
-        display: inline-block; /* 讓內容可以被動畫 */
-        padding-left: 100%; /* 從螢幕右側開始 */
-        animation: marquee-scroll var(--marquee-speed) linear infinite; /* 使用CSS變數控制速度 */
-        animation-delay: 1s; /* 稍微延遲後開始第一次滾動 */
-    }
-    .marquee-content span {
-        margin-right: 40px; /* 訊息間距 */
-        display: inline-block; /* 確保每個訊息獨立佔用空間 */
-    }
-    /* V5.03.005U NEW: 跑馬燈動畫 */
-    @keyframes marquee-scroll {
-        0% { transform: translateX(0%); }
-        100% { transform: translateX(-150%); } /* 滾動到左側，確保所有內容都通過 */
-    }
-    /* V5.03.005U NEW: 滑鼠懸停時暫停動畫 (良好使用者體驗) */
-    .marquee-content:hover {
-        animation-play-state: paused;
-    }
-
     /* --- 頁首背景3D環繞動畫 --- */
     @keyframes pan-3d {
       0% {
@@ -295,8 +255,7 @@
     @media (max-width: 768px) {
       /* 調整 padding-top 以補償固定導覽列所佔空間 */
       header {
-        /* V5.03.005U UPDATE: 跑馬燈移位後，header只需考慮導覽列高度 */
-        padding-top: 80px; 
+        padding-top: 100px; 
         padding-bottom: 15px; 
       }
       /* 導覽列高度調整 */
@@ -310,19 +269,6 @@
       .nav.nav-scrolled nav a { 
         font-size: 14px; 
         padding: 5px 8px;
-      }
-
-      /* V5.03.005U NEW: 跑馬燈在手機上的樣式調整 */
-      .marquee-section {
-          font-size: 12px;
-          padding: 5px 10px; /* 進一步縮小手機版高度 */
-          margin-bottom: 15px; /* 與下方卡片保持距離 */
-      }
-      .marquee-content {
-          animation-duration: var(--marquee-speed); /* 保持使用變數 */
-      }
-      .marquee-content span {
-          margin-right: 25px;
       }
 
       /* 使用直向圖片 */
@@ -412,7 +358,7 @@
     <div class="wrap-content">
       <div class="brand">
         <img src="logo1024.png" alt="月光藍海民宿Logo" class="brand-logo">
-        <h1>月光藍海 (網站設計中.. V5.03.005U)</h1> <!-- 更新版本號 -->
+        <h1>月光藍海 (網站設計中.. V5.03.005)</h1>
       </div>
       <div class="menu-toggle">☰</div>
       <nav>
@@ -427,7 +373,6 @@
       </nav>
     </div>
   </div>
-
   <header class="bg-animated" data-bg="0">
     <div class="timer">00:00</div>
     <div class="image-nav">
@@ -438,8 +383,7 @@
     </div>
     <div class="hero">
       <span class="tag">海岸民宿</span>
-      <
-	  <h2 style="margin:8px 0 4px;font-weight:700">桃花島海景住宿推薦：在月光與藍海間，遇見永恆的詩意</h2>
+      <h2 style="margin:8px 0 4px;font-weight:700">桃花島海景住宿推薦：在月光與藍海間，遇見永恆的詩意</h2>
       <p style="margin:0;color:rgba(255,255,255,0.9)">我們以四境(日出、夕陽、雲海、星空)書寫不朽之美。千萬等級打造溫馨山海景觀居所(桃花島月光藍海)，讓每位旅人~不負此行滿載而歸。</p>
     </div>
   </header>
@@ -528,16 +472,6 @@
         </article>
       </div>
       <aside class="sidebar">
-        <!-- V5.03.005U NEW: Marquee Section (跑馬燈區塊) 移到線上訂房需求單上方 -->
-        <section class="marquee-section">
-          <div class="marquee-content">
-            <span>🔔 最新公告：感謝您的到來，桃花島月光藍海歡迎您！請注意防曬，享受海風。</span>
-            <span>✨ 限時優惠：預訂三晚享八折！速洽客服。</span>
-            <span>🏖️ 旅遊建議：附近步道已開放，適合早晨健行。</span>
-            <span>☀️ 好消息：連續入住三天兩夜享免費早餐升級。</span>
-          </div>
-        </section>
-
         <div class="card" id="booking">
           <h3>線上訂房需求單</h3>
           
